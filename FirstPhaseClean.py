@@ -8,6 +8,7 @@ df = pd.read_csv('/Users/maryamtanveer/Desktop/This Is It.csv')
 
 #print(df.columns)
 
+#This function turns the forward coded Likert Scale parts of the survey into numerical values; This is called for the Ongoing Consent and Communicative Sexuality
 def ForwardCoded(number):
     for index in range(0, len(df.index)):
         x = df.iat[index, number]
@@ -27,7 +28,7 @@ def ForwardCoded(number):
             df.loc[index, number] = '2'
         if "strongly disagree" == str(x).lower():
             df.loc[index, number] = '1'
-
+#This function turns the reverse coded Likert Scale parts of the survey into numerical values; This is called for Subtle Coercion
 def ReverseCoded(number):
     for index in range(0, len(df.index)):
         x = df.iat[index, number]
@@ -47,7 +48,8 @@ def ReverseCoded(number):
             df.loc[index, number] = '6'
         if "strongly disagree" == str(x).lower():
             df.loc[index, number] = '7'
-
+            
+#This function nulls the rest of the answers within subscale if they select Prefer not to answer for any questions within the subscale
 def my_function(index, number):
     # ongoing consent
     if 18 <= number <= 23:
@@ -66,6 +68,7 @@ def my_function(index, number):
         #print("communicative sexuality")
 
 #semester
+#Converts semesters into numerical scores
 for index in range(0, len(df.index)):
 
     y = df.columns.get_loc("2")
@@ -108,6 +111,7 @@ for index in range(0, len(df.index)):
         df.loc[index, y] = 'NA'
     df.loc[0, df.columns.get_loc('23')] = 'Transfer Status'
 #spring scholar
+#Converts spring scholar status into numerical scores
 for index in range(0, len(df.index)):
     y = df.columns.get_loc("24")
     x = df.iat[index, y]
@@ -119,6 +123,7 @@ for index in range(0, len(df.index)):
         df.loc[index, y] = 'NA'
     df.loc[0, df.columns.get_loc('24')] = 'Spring Scholar Status'
 #race
+#Converts race into numerical scores
 for index in range(0, len(df.index)):
     y = df.columns.get_loc("25")
     x = df.iat[index, y]
@@ -142,6 +147,7 @@ for index in range(0, len(df.index)):
         df.loc[index, y] = 8
     df.loc[0, df.columns.get_loc('25')] = 'Race'
 #gender
+#Converts gender into numerical scores
 for index in range(0, len(df.index)):
     y = df.columns.get_loc("27")
     x = df.iat[index, y]
@@ -159,6 +165,7 @@ for index in range(0, len(df.index)):
         df.loc[index, y] = 4
     df.loc[0, df.columns.get_loc('27')] = 'Gender'
 #sexuality
+#Converts sexuality into numerical scores
 for index in range(0, len(df.index)):
     y = df.columns.get_loc("29")
     x = df.iat[index, y]
@@ -176,6 +183,7 @@ for index in range(0, len(df.index)):
         df.loc[index, y] = 4
     df.loc[0, df.columns.get_loc('29')] = 'Sexuality'
 #age
+#Converts age into numerical scores
 for index in range(1, len(df.index)):
     y = df.columns.get_loc("31")
     x = df.iat[index, y]
@@ -184,6 +192,7 @@ for index in range(1, len(df.index)):
     if "prefer not to answer" == str(x).lower():
         df.loc[index, y] = 17
 #relationship
+#Converts relationship into numerical scores
 for index in range(0, len(df.index)):
     y = df.columns.get_loc("32")
     x = df.iat[index, y]
@@ -201,6 +210,7 @@ for index in range(0, len(df.index)):
         df.loc[index, y] = 5
     df.loc[0, df.columns.get_loc('32')] = 'Relationship Status'
 #religion
+#Converts religion into numerical scores
 for index in range(0, len(df.index)):
     y = df.columns.get_loc("34")
     x = df.iat[index, y]
@@ -236,6 +246,7 @@ for index in range(0, len(df.index)):
         df.loc[index, y] = 3
     df.loc[0, df.columns.get_loc('37')] = 'Council'
 #region
+#Converts region into numerical scores
 for index in range(1, len(df.index)):
     x = df.iat[index, df.columns.get_loc('38')]
     answer = str(x)
@@ -263,6 +274,7 @@ for index in range(1, len(df.index)):
 
     df.loc[0, df.columns.get_loc('38')] = 'Region Score'
 #tulane activities
+#Converts activities into numerical scores within new columns
 for index in range(1, len(df.index)):
     x = df.iat[index, df.columns.get_loc('4')]
     if "SAPHE Workshops (Consent Conversation, Sexual Violence 101, etc.)" in str(x):
@@ -308,6 +320,7 @@ for index in range(1, len(df.index)):
     else:
         df.loc[index, 'Tulane Prefer not to answer'] = '0'
 #tulane helpfulness
+#Converts helpfulness into numerical scores
 for index in range(1, len(df.index)):
     # Tulane Helpfulness
     y = df.columns.get_loc('13_1')
@@ -326,6 +339,7 @@ for index in range(1, len(df.index)):
         df.loc[index, y] = '0'
     df.loc[0, y] = 'Tulane Helpfulness'
 #non tulane activities
+#Converts activities into numerical scores within new columns
 for index in range(1, len(df.index)):
     x = df.iat[index, df.columns.get_loc('14')]
     if "Sexual health education (includes discussions surrounding sex and sexuality, consent, sexual violence, sexually transmitted diseases, puberty, etc.)" in str(
@@ -359,6 +373,7 @@ for index in range(1, len(df.index)):
     else:
         df.loc[index, 'Non-Tulane Prefer not to answer'] = '0'
 #non tulane helpfulness
+#Converts helpfulness into numerical scores
 for index in range(2, len(df.index)):
     # Non-Tulane Helpfulness
     y = df.columns.get_loc('19_1')
@@ -383,6 +398,7 @@ for index in range(2, len(df.index)):
 #print('This is the FIRST column number: ' + str(df.columns.get_loc('20_1')))
 #print('This is the LAST column number: ' + str(df.columns.get_loc('22_8')))
 #consent scale
+#Creates new columns with labels
 for number in range(18, 38):
     if "18" in str(number):
         df.loc[0, number] = 'Ongoing Consent - 1'
@@ -448,6 +464,7 @@ for number in range(18, 38):
         ForwardCoded(number)
         # communicative sexuality is 30 though 37
 #consent scale NULLer
+#Calls the function that nulls the subscales
 for number in range(18, 38):
     for index in range(0, len(df.index)):
         x = df.iat[index, number]
