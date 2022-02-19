@@ -1,0 +1,17 @@
+import pandas as pd
+
+df = pd.read_csv('/Users/maryamtanveer/Desktop/This Is It.csv')
+
+# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+df = pd.read_csv('/Users/maryamtanveer/Desktop/trial run.csv')
+
+unique_sym = [""]
+for index in range(0, len(df.index)):
+    y = df.columns.get_loc("Symptoms")
+    sym = df.iat[index, y]
+    symList = sym.split(",")
+    for x in range(0, len(symList)):
+        for w in range(0, len(unique_sym)):
+            if unique_sym.count(symList[x].lower().strip()) <= 0:
+                unique_sym.append(symList[x].lower().strip())
+print(unique_sym)
